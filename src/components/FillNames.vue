@@ -1,23 +1,28 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
+const nameToAdd = ref('')
+const filledNames = ref<string[]>([])
+
+const addName = () => {
+    filledNames.value.push(nameToAdd.value)
+    nameToAdd.value = ''
+}
+
+const removeFilledName = (index: number) => {
+    filledNames.value.splice(index, 1)
+}
 </script>
 <template>
     <div>
         <div class="fields">
-            <input type="text" placeholder="Novo nome para lista">
-            <button>Adicionar nome</button>
+            <input v-model="nameToAdd" type="text" placeholder="Novo nome para lista">
+            <button @click="addName">Adicionar nome</button>
         </div>
         <div class="filled-names">
-            <div class="name">
-                <span>Nome 1</span>
-                <button>Remover</button>
-            </div>
-            <div class="name">
-                <span>Nome 2</span>
-                <button>Remover</button>
-            </div>
-            <div class="name">
-                <span>Nome 3</span>
-                <button>Remover</button>
+            <div class="name" v-for="(filledName, index) in filledNames" v-bind:key="index">
+                <span>{{ filledName }}</span>
+                <button @click="removeFilledName(index)">Remover</button>
             </div>
         </div>
     </div>
