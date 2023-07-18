@@ -1,18 +1,21 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useListNamesStore } from '../stores/names';
 
-const nameToAdd = ref('')
-const filledNames = ref<string[]>([])
+const ListNamesStore = useListNamesStore();
+const nameToAdd = ref('');
+const filledNames = ref(ListNamesStore.ListNames)
 
 const addName = () => {
-    filledNames.value.push(nameToAdd.value)
-    nameToAdd.value = ''
-}
+  ListNamesStore.addNameToList(nameToAdd.value);
+  nameToAdd.value = '';
+};
 
 const removeFilledName = (index: number) => {
-    filledNames.value.splice(index, 1)
-}
+  ListNamesStore.RemoveByIndex(index)
+};
 </script>
+
 <template>
     <div>
         <div class="fields">
